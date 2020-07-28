@@ -1,5 +1,9 @@
 package com.yogendra.imgurmediamvvm.model
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
 
 data class ImgurResponseData(
     val id: String,
@@ -40,7 +44,7 @@ data class ImgurResponseData(
     val tags: List<ImgurTags>
 
 ) {
-
+    override fun toString() = "Blog title: $title,Image count: $images_count"
 }
 
 data class AdConfig(
@@ -71,7 +75,10 @@ data class ImgurTags(
     val description_annotations: List<String>? = null
 )
 
+@Entity(tableName = "blog_images")
 data class BlogImages(
+    @PrimaryKey
+    @ColumnInfo(name = "id")
     val id: String,
     val title: String? = null,
     val description: String,
@@ -103,7 +110,8 @@ data class BlogImages(
     val ups: String? = null,
     val downs: String? = null,
     val points: String? = null,
-    val score: String? = null
-
-
-)
+    val score: String? = null,
+    val local_comment: String? = null //To handle Local comment
+){
+    override fun toString()= "image url= $link"
+}
