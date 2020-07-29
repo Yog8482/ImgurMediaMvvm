@@ -41,7 +41,7 @@ data class ImgurResponseData(
     val include_album_ads: Boolean,
     val images: List<BlogImages>,
     val ad_config: AdConfig,
-    val tags: List<ImgurTags>
+    val tags: List<ImgurTags> = emptyList()
 
 ) {
     override fun toString() = "Blog title: $title,Image count: $images_count"
@@ -49,9 +49,9 @@ data class ImgurResponseData(
 
 data class AdConfig(
     val safeFlags: List<String>?,
-    val highRiskFlags: List<String>?,
-    val unsafeFlags: List<String>?,
-    val wallUnsafeFlags: List<String>?,
+    val highRiskFlags: List<String> = emptyList(),
+    val unsafeFlags: List<String> = emptyList(),
+    val wallUnsafeFlags: List<String> = emptyList(),
     val showsAds: Boolean
 )
 
@@ -72,7 +72,7 @@ data class ImgurTags(
     val description: String,
     val logo_hash: String? = null,
     val logo_destination_url: String? = null,
-    val description_annotations: List<String>? = null
+    val description_annotations: Any? = null
 )
 
 @Entity(tableName = "blog_images")
@@ -112,6 +112,6 @@ data class BlogImages(
     val points: String? = null,
     val score: String? = null,
     val local_comment: String? = null //To handle Local comment
-){
-    override fun toString()= "image url= $link"
+) {
+    override fun toString() = "image url= $link"
 }

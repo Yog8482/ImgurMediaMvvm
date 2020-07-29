@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/navigation_listItem">
+
+    <fragment
+        android:id="@+id/navigation_list"
+        android:name="com.yogendra.imgurmediamvvm.ui.main.MainFragment"
+        android:label="List"
+        tools:layout="@layout/main_fragment">
+        <action
+            android:id="@+id/action_navigation_list_to_navigation_listItem"
+            app:destination="@id/navigation_listItem"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_listItem"
+        android:name="com.yogendra.imgurmediamvvm.ui.details.DetailsFragment"
+        android:label="Title of image"
+        tools:layout="@layout/details_fragment">
+
+<!--        <argument-->
+<!--            android:name="image_id"-->
+<!--            app:argType="string" />-->
+
+    </fragment>
+</navigation>

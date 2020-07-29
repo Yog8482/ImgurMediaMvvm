@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ImgurMediaMvvm</string>
+    <string name="comment_ph">Comment</string>
+    <string name="submit_comment">Submit</string>
 </resources>
