@@ -20,6 +20,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.standalone.cooeyhealthtinder.connectivity.base.ConnectivityProvider
 import com.yogendra.imgurmediamvvm.databinding.MainActivityBinding
 import com.yogendra.imgurmediamvvm.ui.main.MainFragment
+import com.yogendra.imgurmediamvvm.ui.main.MainFragmentDirections
 import com.yogendra.imgurmediamvvm.utils.IS_INTERNET_AVAILABLE
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -27,20 +28,13 @@ import dagger.android.HasAndroidInjector
 import kotlinx.android.synthetic.main.main_activity.*
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), ConnectivityProvider.ConnectivityStateListener,
-    HasAndroidInjector {
+class MainActivity : AppCompatActivity(), ConnectivityProvider.ConnectivityStateListener {
 
-
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+    var searchItem: MenuItem? = null
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     private val provider: ConnectivityProvider by lazy { ConnectivityProvider.createProvider(this) }
-
-
-    override fun androidInjector(): AndroidInjector<Any> =
-        dispatchingAndroidInjector as AndroidInjector<Any>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,14 +53,19 @@ class MainActivity : AppCompatActivity(), ConnectivityProvider.ConnectivityState
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_list, R.id.navigation_listItem
+                R.id.navigation_list
             )
         )
 
         setupActionBarWithNavController(navController, appBarConfiguration)
 
+//        navController.addOnDestinationChangedListener { _, dest, _ ->
+//            when (dest.id) {
+//                R.id.navigation_list -> searchBarVisiblity(true)
+//                else -> searchBarVisiblity(false)
+//            }
+//        }
     }
-
 
 
     override fun onSupportNavigateUp(): Boolean {
@@ -93,15 +92,21 @@ class MainActivity : AppCompatActivity(), ConnectivityProvider.ConnectivityState
     }
 
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu, menu)
-
-        val searchItem: MenuItem = menu.findItem(R.id.action_search)
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchView: SearchView = searchItem.actionView as SearchView
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-
-        return super.onCreateOptionsMenu(menu)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+//        menuInflater.inflate(R.menu.menu, menu)
+//
+//        searchItem = menu.findItem(R.id.action_search)
+//        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+//        val searchView: SearchView = searchItem?.actionView as SearchView
+//
+//        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+//
+//        return super.onCreateOptionsMenu(menu)
+//    }
+//
+//    fun searchBarVisiblity(visiblity: Boolean) {
+//        searchItem?.isVisible = visiblity
+//
+//    }
 
 }
