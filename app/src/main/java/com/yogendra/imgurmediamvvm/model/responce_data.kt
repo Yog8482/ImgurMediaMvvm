@@ -3,6 +3,7 @@ package com.yogendra.imgurmediamvvm.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
 
 data class ImgurResponseData(
@@ -75,10 +76,11 @@ data class ImgurTags(
     val description_annotations: Any? = null
 )
 
-@Entity(tableName = "blog_images")
+@Entity(tableName = "blog_images",
+    primaryKeys = ["id"]
+)
 data class BlogImages(
-    @PrimaryKey
-    @ColumnInfo(name = "id")
+    @field:SerializedName("id")
     val id: String,
     val title: String? = null,
     val description: String,

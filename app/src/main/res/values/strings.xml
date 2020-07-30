@@ -2,4 +2,10 @@
     <string name="app_name">ImgurMediaMvvm</string>
     <string name="comment_ph">Comment</string>
     <string name="submit_comment">Submit</string>
+    <string name="views_ph">1220 Views</string>
+    <string name="points_ph">12.24k Points</string>
+    <string name="blog_title">Title</string>
+    <string name="by_accnturl">by olimndz792</string>
+    <string name="last_updated">Jan 28</string>
+    <string name="no_data">No Data</string>
 </resources>
