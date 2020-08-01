@@ -5,8 +5,8 @@
     tools:context=".ui.home.activities.TransactionSearchActivity">
     <item
         android:id="@+id/action_search"
-        android:icon="@android:drawable/ic_menu_search"
-        app:showAsAction="always|collapseActionView"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="Search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        android:title="Search"/>
+        app:showAsAction="always|collapseActionView" />
 </menu>

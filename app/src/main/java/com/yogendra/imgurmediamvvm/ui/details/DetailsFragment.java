@@ -1,36 +1,33 @@
 package com.yogendra.imgurmediamvvm.ui.details;
 
-import androidx.lifecycle.ViewModelProviders;
 
+import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavArgs;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.yogendra.imgurmediamvvm.R;
+import com.yogendra.imgurmediamvvm.databinding.DetailsFragmentBinding;
+import com.yogendra.imgurmediamvvm.model.PostImages;
+import com.yogendra.imgurmediamvvm.utils.custom.MultilineSnackbar;
 
 public class DetailsFragment extends Fragment implements View.OnClickListener {
 
     private DetailsViewModel mViewModel;
-
-    public static DetailsFragment newInstance() {
-        return new DetailsFragment();
-    }
-
-    EditText editTextTextMultiLine;
-    Button submitbtn;
     Context context;
 
-    private String imageID = null, title = "Details";
+    private String imageID, title;
+    private DetailsFragmentBinding binding = null;
 
 
     @Override
@@ -38,36 +35,73 @@ public class DetailsFragment extends Fragment implements View.OnClickListener {
                              @Nullable Bundle savedInstanceState) {
 
         context = getActivity();
-        View view = inflater.inflate(R.layout.details_fragment, container, false);
-        editTextTextMultiLine = view.findViewById(R.id.editTextTextMultiLine);
-        submitbtn = view.findViewById(R.id.submit_button);
-        submitbtn.setOnClickListener(this::onClick);
-        return view;
+        binding = DetailsFragmentBinding.inflate(inflater, container, false);
+
+        binding.submitButton.setOnClickListener(this::onClick);
+
+        Application application = requireActivity().getApplication();
+
+        title = DetailsFragmentArgs.fromBundle(getArguments()).getTitle();
+        imageID = DetailsFragmentArgs.fromBundle(getArguments()).getImageId();
+
+        DetailFragmentViewModelFactory factory = new DetailFragmentViewModelFactory(application, imageID);
+        mViewModel = new ViewModelProvider(this, factory).get(DetailsViewModel.class);
+
+
+        mViewModel.getImageDetails().observe(getViewLifecycleOwner(), new imageDetailsObserver());
+        mViewModel.getUpdateSuccess().observe(getViewLifecycleOwner(), new updateSuccessObserver());
+
+        return binding.getRoot();
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(DetailsViewModel.class);
-        // TODO: Use the ViewModel
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        assert getArguments() != null;
-        title = DetailsFragmentArgs.fromBundle(getArguments()).getTitle();
-        imageID = DetailsFragmentArgs.fromBundle(getArguments()).getImageId();
 
     }
 
     public void clearFocus() {
-        editTextTextMultiLine.clearFocus();
-        submitbtn.requestFocus();
+        binding.editTextMultiLine.clearFocus();
+        binding.submitButton.requestFocus();
     }
 
     @Override
     public void onClick(View v) {
+        String comment = binding.editTextMultiLine.getText().toString();
+        mViewModel.updateComment(comment);
         clearFocus();
+    }
+
+
+    private class updateSuccessObserver implements Observer<Boolean> {
+        @Override
+        public void onChanged(@Nullable Boolean isupdated) {
+            String message;
+            if (isupdated == null) {
+                return;
+            }
+            if (isupdated)
+                message = context.getResources().getString(R.string.update_success);
+            else
+                message = context.getResources().getString(R.string.update_failed);
+
+            new MultilineSnackbar(binding.getRoot(), message).show();
+
+        }
+    }
+
+
+    private class imageDetailsObserver implements Observer<PostImages> {
+        @Override
+        public void onChanged(PostImages imageDetails) {
+            if (imageDetails == null || imageDetails.getLink().isEmpty()) {
+                new MultilineSnackbar(binding.getRoot(), context.getResources().getString(R.string.no_details)).show();
+                return;
+            }
+
+            binding.setData(imageDetails);
+
+        }
     }
 }

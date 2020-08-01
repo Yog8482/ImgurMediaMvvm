@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/navigation_list"
-        android:name="com.yogendra.imgurmediamvvm.ui.main.MainFragment"
-        android:label="List"
-        tools:layout="@layout/main_fragment">
+        android:name="com.yogendra.imgurmediamvvm.ui.search.SearchFragment"
+        android:label="Search"
+        tools:layout="@layout/search_fragment">
         <action
             android:id="@+id/action_navigation_list_to_navigation_listItem"
             app:destination="@id/navigation_listItem"

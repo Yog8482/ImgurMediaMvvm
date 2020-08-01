@@ -1,17 +1,10 @@
 package com.yogendra.imgurmediamvvm
 
-import android.app.SearchManager
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.view.WindowManager
-import androidx.appcompat.widget.SearchView
-import androidx.core.view.MenuItemCompat
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -19,14 +12,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.standalone.cooeyhealthtinder.connectivity.base.ConnectivityProvider
 import com.yogendra.imgurmediamvvm.databinding.MainActivityBinding
-import com.yogendra.imgurmediamvvm.ui.main.MainFragment
-import com.yogendra.imgurmediamvvm.ui.main.MainFragmentDirections
 import com.yogendra.imgurmediamvvm.utils.IS_INTERNET_AVAILABLE
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
-import kotlinx.android.synthetic.main.main_activity.*
-import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), ConnectivityProvider.ConnectivityStateListener {
 
@@ -59,12 +45,6 @@ class MainActivity : AppCompatActivity(), ConnectivityProvider.ConnectivityState
 
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-//        navController.addOnDestinationChangedListener { _, dest, _ ->
-//            when (dest.id) {
-//                R.id.navigation_list -> searchBarVisiblity(true)
-//                else -> searchBarVisiblity(false)
-//            }
-//        }
     }
 
 
@@ -90,23 +70,4 @@ class MainActivity : AppCompatActivity(), ConnectivityProvider.ConnectivityState
     private fun ConnectivityProvider.NetworkState.hasInternet(): Boolean {
         return (this as? ConnectivityProvider.NetworkState.ConnectedState)?.hasInternet == true
     }
-
-
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        menuInflater.inflate(R.menu.menu, menu)
-//
-//        searchItem = menu.findItem(R.id.action_search)
-//        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-//        val searchView: SearchView = searchItem?.actionView as SearchView
-//
-//        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-//
-//        return super.onCreateOptionsMenu(menu)
-//    }
-//
-//    fun searchBarVisiblity(visiblity: Boolean) {
-//        searchItem?.isVisible = visiblity
-//
-//    }
-
 }
