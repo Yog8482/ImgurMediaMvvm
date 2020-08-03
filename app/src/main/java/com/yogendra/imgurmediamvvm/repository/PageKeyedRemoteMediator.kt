@@ -24,6 +24,9 @@ class PageKeyedRemoteMediator(
     private val postDao: PostDao = db.posts()
     private val postsImagesDao: PostImagesDao = db.postImages()
 
+    companion object {
+        var startPage = 1
+    }
 
     override suspend fun load(
         loadType: LoadType,
@@ -31,8 +34,30 @@ class PageKeyedRemoteMediator(
     ): MediatorResult {
         try {
 
+
+            val loadKey = when (loadType) {
+                LoadType.REFRESH -> startPage
+                // In this example, we never need to prepend, since REFRESH will always load the
+                // first page in the list. Immediately return, reporting end of pagination.
+                LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
+                // Query remoteKeyDao for the next RemoteKey.
+                LoadType.APPEND -> {
+                    startPage +=1
+                    val remoteKey = startPage
+                    // We must explicitly check if the page key is `null` when appending,
+                    // since `null` is only valid for initial load. If we receive `null`
+                    // for APPEND, that means we have reached the end of pagination and
+                    // there are no more items to load.
+                    if (remoteKey == 10) {
+                        return MediatorResult.Success(endOfPaginationReached = true)
+                    }
+
+                    remoteKey
+                }
+            }
+
             val data = postsApi.getPosts(
-                page = 1,
+                page = loadKey,
                 query = searchquery
             ).data
 

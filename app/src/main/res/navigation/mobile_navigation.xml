@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/navigation_listItem"
-        android:name="com.yogendra.imgurmediamvvm.ui.details.DetailsFragment"
+        android:name="com.yogendra.imgurmediamvvm.ui.details_kotlin.DetailsKotlinFragment"
         android:label="{title}"
         tools:layout="@layout/details_fragment">
 

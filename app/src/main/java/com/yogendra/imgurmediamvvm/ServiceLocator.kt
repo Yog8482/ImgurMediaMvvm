@@ -1,9 +1,10 @@
 package com.yogendra.imgurmediamvvm
 
 import android.app.Application
-import androidx.annotation.VisibleForTesting
 import com.yogendra.imgurmediamvvm.api.PostMediaApi
 import com.yogendra.imgurmediamvvm.db.AppDatabase
+import com.yogendra.imgurmediamvvm.repository.DbDetailsRepository
+import com.yogendra.imgurmediamvvm.repository.DbDetailsRepository_Kotlin
 import com.yogendra.imgurmediamvvm.repository.DbPostRepository
 import com.yogendra.imgurmediamvvm.repository.PostsRepository
 
@@ -19,7 +20,7 @@ interface ServiceLocator {
             synchronized(LOCK) {
                 if (instance == null) {
                     instance = DefaultServiceLocator(
-                            app = context
+                        app = context
                     )
                 }
                 return instance!!
@@ -29,6 +30,7 @@ interface ServiceLocator {
     }
 
     fun getRepository(): PostsRepository
+    fun getdetailsRepository(): DbDetailsRepository_Kotlin
 
     fun getApi(): PostMediaApi
 }
@@ -45,10 +47,16 @@ open class DefaultServiceLocator(val app: Application) : ServiceLocator {
         PostMediaApi.create()
     }
 
-     override fun getRepository(): PostsRepository {
-        return  DbPostRepository(
-        db = db,
-        postApi = getApi()
+    override fun getRepository(): PostsRepository {
+        return DbPostRepository(
+            db = db,
+            postApi = getApi()
+        )
+    }
+
+    override fun getdetailsRepository(): DbDetailsRepository_Kotlin {
+        return DbDetailsRepository_Kotlin(
+            application = app
         )
     }
 

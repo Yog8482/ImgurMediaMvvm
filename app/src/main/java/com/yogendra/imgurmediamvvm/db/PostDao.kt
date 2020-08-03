@@ -15,6 +15,4 @@ interface PostDao {
     @Query("SELECT * FROM Posts where searchquery = :query")
     fun getPostsBySearchQuery(query: String): PagingSource<Int, PostsData>
 
-//    @Query("SELECT * FROM Posts WHERE id = :postid")
-//    suspend fun getPostImagesByPostId(postid: String): PagingSource<Int, PostsData>
 }

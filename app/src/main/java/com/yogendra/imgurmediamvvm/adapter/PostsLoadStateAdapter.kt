@@ -8,6 +8,8 @@ import com.yogendra.imgurmediamvvm.adapter.common.NetworkStateItemViewHolder
 class PostsLoadStateAdapter(
     private val adapter: PostsParentAdapter
 ) : LoadStateAdapter<NetworkStateItemViewHolder>() {
+
+
     override fun onBindViewHolder(holder: NetworkStateItemViewHolder, loadState: LoadState) {
         holder.bindTo(loadState)
     }
@@ -18,4 +20,5 @@ class PostsLoadStateAdapter(
     ): NetworkStateItemViewHolder {
         return NetworkStateItemViewHolder(parent) { adapter.retry() }
     }
+
 }

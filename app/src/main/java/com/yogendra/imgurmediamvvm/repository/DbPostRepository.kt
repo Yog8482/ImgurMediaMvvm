@@ -18,6 +18,7 @@ class DbPostRepository(val db: AppDatabase, val postApi: PostMediaApi) : PostsRe
 
     override fun postsFromSearchQuery(searchQuery: String, pageSize: Int) = Pager(
         config = PagingConfig(pageSize),
+//        pagingSourceFactory = { PageKeyedRemoteMediator(db, postApi, searchQuery) }
         remoteMediator = PageKeyedRemoteMediator(db, postApi, searchQuery)
     ) {
         db.posts().getPostsBySearchQuery(searchQuery)

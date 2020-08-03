@@ -71,7 +71,7 @@ data class PostImages(
     @field:SerializedName("id")
     val image_id: String,
     val title: String? = null,
-    val description: String,
+    val description: String?,
     val datetime: String,//In Seconds
     val type: String,
     val animated: Boolean,
@@ -86,32 +86,5 @@ data class PostImages(
 }
 
 
-data class AdConfig(
-    val safeFlags: List<String>?,
-    val highRiskFlags: List<String> = emptyList(),
-    val unsafeFlags: List<String> = emptyList(),
-    val wallUnsafeFlags: List<String> = emptyList(),
-    val showsAds: Boolean
-)
-
-
-data class ImgurTags(
-    val name: String,
-    val display_name: String,
-    val followers: Long,
-    val total_items: Long,
-    val following: Boolean,
-    val is_whitelisted: Boolean,
-    val background_hash: String,
-    val thumbnail_hash: String? = null,
-    val accent: String,
-    val background_is_animated: Boolean,
-    val thumbnail_is_animated: Boolean,
-    val is_promoted: Boolean,
-    val description: String,
-    val logo_hash: String? = null,
-    val logo_destination_url: String? = null,
-    val description_annotations: Any? = null
-)
 
 

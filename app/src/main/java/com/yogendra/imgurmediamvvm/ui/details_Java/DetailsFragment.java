@@ -1,4 +1,4 @@
-package com.yogendra.imgurmediamvvm.ui.details;
+package com.yogendra.imgurmediamvvm.ui.details_Java;
 
 
 import android.app.Application;
@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +26,7 @@ public class DetailsFragment extends Fragment implements View.OnClickListener {
 
     private String imageID, title;
     private DetailsFragmentBinding binding = null;
+    PostImages currentImageObj;
 
 
     @Override
@@ -41,15 +40,15 @@ public class DetailsFragment extends Fragment implements View.OnClickListener {
 
         Application application = requireActivity().getApplication();
 
-        title = DetailsFragmentArgs.fromBundle(getArguments()).getTitle();
-        imageID = DetailsFragmentArgs.fromBundle(getArguments()).getImageId();
+//        title = DetailsFragmentArgs.fromBundle(getArguments()).getTitle();
+//        imageID = DetailsFragmentArgs.fromBundle(getArguments()).getImageId();
 
         DetailFragmentViewModelFactory factory = new DetailFragmentViewModelFactory(application, imageID);
         mViewModel = new ViewModelProvider(this, factory).get(DetailsViewModel.class);
 
 
-        mViewModel.getImageDetails().observe(getViewLifecycleOwner(), new imageDetailsObserver());
-        mViewModel.getUpdateSuccess().observe(getViewLifecycleOwner(), new updateSuccessObserver());
+//        mViewModel.getImageDetails().observe(getViewLifecycleOwner(), new imageDetailsObserver());
+//        mViewModel.getUpdateSuccess().observe(getViewLifecycleOwner(), new updateSuccessObserver());
 
         return binding.getRoot();
     }
@@ -69,8 +68,15 @@ public class DetailsFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         String comment = binding.editTextMultiLine.getText().toString();
-        mViewModel.updateComment(comment);
-        clearFocus();
+//        if (currentImageObj != null) {
+//            currentImageObj.setLocal_comment(comment);
+//            mViewModel.updateComment(currentImageObj);
+//            clearFocus();
+//        }else {
+//            new MultilineSnackbar(binding.getRoot(), context.getResources().getString(R.string.update_failed)).show();
+//
+//        }
+
     }
 
 
@@ -100,6 +106,7 @@ public class DetailsFragment extends Fragment implements View.OnClickListener {
                 return;
             }
 
+            currentImageObj = imageDetails;
             binding.setData(imageDetails);
 
         }

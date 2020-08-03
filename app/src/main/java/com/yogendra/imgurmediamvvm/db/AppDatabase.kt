@@ -24,13 +24,14 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun postImages(): PostImagesDao
 
-    companion object {
+    companion object getDB {
         fun create(context: Context): AppDatabase {
             val databaseBuilder =
                 Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
 
             return databaseBuilder
                 .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
                 .build()
         }
     }

@@ -15,6 +15,7 @@ class PostsParentAdapter :
     PagingDataAdapter<PostsData, PostsParentAdapter.ParentsPostViewHolder>(POST_COMPARATOR) {
     private val viewPool = RecyclerView.RecycledViewPool()
 
+
     override fun onBindViewHolder(holder: ParentsPostViewHolder, position: Int) {
 
 
